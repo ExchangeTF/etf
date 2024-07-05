@@ -1,12 +1,16 @@
-# EXTF Smart Contract
+# ExchangeTF Smart Contract
 
-The EXTF Contract is a decentralized application built on the XDC blockchain.
+The ExchangeTF Contract is a decentralized application built on the XDC blockchain.
 
 ## Features
 
-- 
+- Staking XDC.
+- Exchange XDC <-> Real world's assets.
+- Unstaking XDC.
 
 ## Smart Contract Details
+
+
 
 ### Contract Name
 
@@ -29,6 +33,9 @@ The EXTF Contract is a decentralized application built on the XDC blockchain.
 
 1. **Clone the Repository**
 
+   ```bash
+   git clone https://github.com/exchangetf/etf
+   ```
 
 2. **Install Dependencies**
 

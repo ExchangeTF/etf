@@ -1,6 +1,6 @@
-# EXTF Frontend
+# ExchangeTF Frontend
 
-The EXTF Frontend is a React-based web application that interacts with the EXTF Smart Contract deployed on the XDC blockchain.
+The ExchangeTF Frontend is a React-based web application that interacts with the ExchangeTF Smart Contract deployed on the XDC blockchain.
 
 ## Project Structure
 
@@ -20,6 +20,9 @@ The frontend project is structured with a combination of pages, components, and 
 
 1. **Clone the Repository**
 
+   ```bash
+   git clone https://github.com/exchangetf/etf
+   ```
 
 2. **Install Dependencies**
 
@@ -41,4 +44,4 @@ The frontend project is structured with a combination of pages, components, and 
 
 ## Smart Contract Interaction
 
-The frontend interacts with the EXTF Smart Contract deployed on the XDC blockchain.
+The frontend interacts with the ExchangeTF Smart Contract deployed on the XDC blockchain.
