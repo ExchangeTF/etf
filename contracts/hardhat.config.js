@@ -7,7 +7,7 @@ require("dotenv").config();
 const mnemonic = process.env.MNEMONIC;
 // const projectId = process.env.PROJECT_ID;
 module.exports = {
-  solidity: "0.7.6",
+  solidity: "0.8.0",
   networks: {
     xdctestnet: {
       url: "https://rpc.apothem.network",

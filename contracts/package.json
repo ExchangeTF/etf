@@ -1,5 +1,5 @@
 {
-  "name": "xexchangetf-contracts",
+  "name": "exchangetf-contracts",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,7 +14,7 @@
     "hardhat": "^2.22.2"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^3.4.1",
+    "@openzeppelin/contracts": "^5.0.2",
     "dotenv": "^16.4.5"
   }
 }

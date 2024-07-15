@@ -3,14 +3,14 @@ const hre = require("hardhat");
 
 async function main() {
   try {
-    const EXTF = await hre.ethers.getContractFactory("EXTF");
-    const extf = await EXTF.deploy();
+    const ExchangeTF = await hre.ethers.getContractFactory("ExchangeTF");
+    const exchangetf = await ExchangeTF.deploy();
 
-    if (typeof extf.deployed === 'function') {
-      await extf.deployed();
-      console.log("Contract deployed to:", extf.address);
+    if (typeof exchangetf.deployed === 'function') {
+      await exchangetf.deployed();
+      console.log("Contract deployed to:", exchangetf.address);
     } else {
-      console.error('extf.deployed is not a function');
+      console.error('exchangetf.deployed is not a function');
     }
   } catch (error) {
     console.error('An error occurred during deployment:', error);

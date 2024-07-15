@@ -1,11 +1,11 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT 
 pragma solidity >=0.4.22 <0.9.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 
-contract EXTF is ERC721 {
+contract ExchangeTF is ERC721 {
     using Counters for Counters.Counter;
     using SafeMath for uint256;
 
@@ -17,15 +17,15 @@ contract EXTF is ERC721 {
     mapping (uint256 => string) private _descs;
      mapping(uint256 => address[]) private _recipients; // List of addresses that can access the token
 
-    constructor() ERC721("EXTF","ETF"){
+    constructor() ERC721("ExchangeTF","ETF"){
     }
 
-    event NewTimeCapsule(uint256 id, address client, uint256 date);
+    event NewExchangeTF(uint256 id, address client, uint256 date);
     event DueDateReset(uint256 id, address client, uint256 date);
     event AddRecipient(uint256 id, address recipient);
 
     modifier onlyRecipient(uint256 tokenId) {
-        require(isRecipient(tokenId, _msgSender()), "EXTF: Not an authorized recipient");
+        require(isRecipient(tokenId, _msgSender()), "ExchangeTF: Not an authorized recipient");
         _;
     }
 
@@ -33,7 +33,7 @@ contract EXTF is ERC721 {
 
     function creationDate(uint256 tokenId) public view returns (uint256) { return _createDate[tokenId]; }
 
-    function registerTimeCapsule(uint256 due_Date, string memory uri, string memory desc, address[] memory recipients) public returns (uint256){
+    function registerExchangeTF(uint256 due_Date, string memory uri, string memory desc, address[] memory recipients) public returns (uint256){
         _tokenIds.increment();
         uint256 newId = _tokenIds.current();
         _mint(_msgSender(), newId);
@@ -43,13 +43,13 @@ contract EXTF is ERC721 {
         _setDescription(newId, desc);
         _addRecipients(newId, recipients);
 
-        emit NewTimeCapsule(newId, _msgSender(), due_Date);
+        emit NewExchangeTF(newId, _msgSender(), due_Date);
 
         return newId;
     }
 
     function addRecipient(uint256 tokenId, address recipient) public {
-        require(ownerOf(tokenId) == _msgSender(), "EXTF: Request is not made by the capsule owner");
+        require(ownerOf(tokenId) == _msgSender(), "ExchangeTF: The requested recipient is not registered.");
         _addRecipient(tokenId, recipient);
         
         emit AddRecipient(tokenId, recipient);
@@ -65,14 +65,14 @@ contract EXTF is ERC721 {
     }
 
 
-    // A penalty fee for changing the due date.
-    // Penalty is 1e11 wei per second; around .01 ether per day
+    // Changing fee for changing the due date.
+    // Fee is 1e11 wei per second.
     function resetDueDate(uint256 tokenId, uint256 newDueDate, uint256 fee) public payable returns (bool) {
-        require(ownerOf(tokenId)==_msgSender(), "EXTF: Request is not made by the capsule owner");
+        require(ownerOf(tokenId)==_msgSender(), "ExchangeTF: The requested recipient is not registered.");
         require(_exists(tokenId), "ERC721Metadata: URI set of nonexistent token");
-        require(_dueDateExists(tokenId), "EXTF: Due Date not set");
-        require(fee>=msg.value, "EXTF: Given fee input is less than payment");
-        require(fee>=calculateResetFee(tokenId,newDueDate), "EXTF: Fee is less than what is should be");
+        require(_dueDateExists(tokenId), "ExchangeTF: Due Date not set");
+        require(fee>=msg.value, "ExchangeTF: Given fee input is less than payment");
+        require(fee>=calculateResetFee(tokenId,newDueDate), "ExchangeTF: Fee is less than what is should be");
 
         // Set due date to 0 temporarily, then set it to the new date to avoid reverts
         _setDueDate(tokenId, 0);
@@ -101,10 +101,10 @@ contract EXTF is ERC721 {
     }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        require(_msgSender()==ownerOf(tokenId), "EXTF: URI being accessed by non-owner");
+        require(_msgSender()==ownerOf(tokenId), "ExchangeTF: URI being accessed by non-owner");
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
-        require(_dueDateExists(tokenId), "EXTF: Due Date not set");
-        require(dueDate(tokenId)<=block.timestamp, "EXTF: Due date not yet past");
+        require(_dueDateExists(tokenId), "ExchangeTF: Due Date not set");
+        require(dueDate(tokenId)<=block.timestamp, "ExchangeTF: Due date not yet past");
 
         //return _tokenURIs[tokenId];
         string memory _tokenURI = _tokenURIs[tokenId];
@@ -124,7 +124,7 @@ contract EXTF is ERC721 {
     }
 
     function viewTitle(uint256 tokenId) public view returns (string memory) {
-        require(_msgSender()==ownerOf(tokenId), "EXTF: URI being accessed by non-owner");
+        require(_msgSender()==ownerOf(tokenId), "ExchangeTF: URI being accessed by non-owner");
         require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
 
         return _descs[tokenId];
